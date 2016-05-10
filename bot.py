@@ -109,7 +109,7 @@ def box_file(message):
 
 	# files = {'files': open('/home/sumit.suthar/workdir/mattermost/mat.pptx', 'rb')}
 
-	files = {'files': send_file}
+	files = {'files': (box_name, send_file)}
 
 	data = {'channel_id': channel_id}
 
