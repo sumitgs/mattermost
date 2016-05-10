@@ -29,8 +29,6 @@ def box_file(message):
 
 	channel_id = message.get_channel_id()
 
-	print(channel_id)
-
 	message_body = message.get_message()
 
 	bearer = "<box_developer_token>"
@@ -45,28 +43,16 @@ def box_file(message):
 	response = requests.get(url, headers=headers)
 
 	output = json.loads(response.text)
-	print(output['id'])
 
 	box_id = output['id']
 	box_name = output['name']
 
-
-# step  2
-
-
-
 	url = "https://api.box.com/2.0/files/" + box_id + "/content"
-	print(url)
-
 
 	headers = {'authorization': auth_header}
 	response = requests.get(url, headers=headers)
 
 	send_file =  response.content
-
-
-	# step 3
-
 
 	url = "<url_of_the_mattermost>/api/v1/users/login"
 
@@ -75,14 +61,7 @@ def box_file(message):
 
 	response = requests.request("POST", url, data=payload, headers=headers)
 
-	print(response.headers)
-
 	token_id = response.headers['Token']
-
-	print(token_id)
-
-
-	# step 4-pre
 
 	url = "<url_of_the_mattermost>/api/v1/users/me"
 
@@ -91,12 +70,6 @@ def box_file(message):
 	headers =  {'authorization': auth_header}
 
 	response = requests.request("GET", url, headers=headers)
-
-	print(response)
-
-
-	# step 4
-
 
 	url = "<url_of_the_mattermost>/api/v1/files/upload"
 
@@ -107,8 +80,6 @@ def box_file(message):
 
 	files = {'files': send_file}
 
-	# files = {'files': open('/home/sumit.suthar/workdir/mattermost/mat.pptx', 'rb')}
-
 	files = {'files': (box_name, send_file)}
 
 
@@ -117,18 +88,10 @@ def box_file(message):
 	response = requests.post(url, files=files, data=data, headers=headers)
 
 	output = json.loads(response.text)
-	print(output['filenames'])
 
-	print(response.text)
 	filenamesT = output['filenames']
 
 	filenames = filenamesT[0]
-	print(filenames)
-
-
-	#step 5
-
-	print("step 5")
 
 	url = "<url_of_the_mattermost>/api/v1/channels/" + channel_id + "/create"
 
@@ -145,8 +108,4 @@ def box_file(message):
 
 	payload = "{\"filenames\": " + filenames + ",\"message\":\"\",\"channel_id\": \"" + string[1] + "\",\"pending_post_id\": \"" + joinString + "\",\"user_id\": \"" + string[2] + "\" ,\"create_at\":" + time + "}"
 
-	print payload
-
 	response = requests.request("POST", url, data=payload, headers=headers)
-
-	print response
