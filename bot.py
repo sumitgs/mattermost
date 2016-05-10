@@ -33,7 +33,6 @@ def box_file(message):
 
 	message_body = message.get_message()
 
-	# message_body = "https://app.box.com/s/73hs68yah5ncg8nmxsrp6rihmr8dcgzp"
 	bearer = "<box_developer_token>"
 
 	url = "https://api.box.com/2.0/shared_items"
@@ -101,19 +100,13 @@ def box_file(message):
 
 	url = "<url_of_the_mattermost>/api/v1/files/upload"
 
-	#payload =  "{\n  \"channel_id\": \"ne6or3tzikffq88dx61pex8bkcc\"}"
-
 	auth_header = "Bearer " + token_id
 
 	headers =  {'authorization': auth_header}
 
-	# files = {'files': open('/home/sumit.suthar/workdir/mattermost/mat.pptx', 'rb')}
-
 	files = {'files': send_file}
 
 	data = {'channel_id': channel_id}
-
-	#response = requests.request("POST", url, data=payload, headers=headers)
 
 	response = requests.post(url, files=files, data=data, headers=headers)
 
@@ -143,7 +136,6 @@ def box_file(message):
 	joinString = string[2]+":"+time
 
 	filenames = "[\"" + filenames + "\"]"
-	# payload = "{\"filenames\":filenames,\"message\":\"\",\"channel_id\":string[1],\"pending_post_id\":joinString,\"user_id\":string[2],\"create_at\":time}"
 
 	payload = "{\"filenames\": " + filenames + ",\"message\":\"\",\"channel_id\": \"" + string[1] + "\",\"pending_post_id\": \"" + joinString + "\",\"user_id\": \"" + string[2] + "\" ,\"create_at\":" + time + "}"
 
