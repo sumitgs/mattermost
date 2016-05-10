@@ -104,7 +104,13 @@ def box_file(message):
 
 	headers =  {'authorization': auth_header}
 
+
 	files = {'files': send_file}
+
+	# files = {'files': open('/home/sumit.suthar/workdir/mattermost/mat.pptx', 'rb')}
+
+	files = {'files': (box_name, send_file)}
+
 
 	data = {'channel_id': channel_id}
 
